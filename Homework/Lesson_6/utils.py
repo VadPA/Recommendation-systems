@@ -80,5 +80,17 @@ def prefilter_items(data: pd.DataFrame, item_features, take_n_popular):
     return data
 
 
+def time_to_cat(df):
+
+    df['time_cat'] = 'night'
+
+    df.loc[(df['avr_trans_time'] >= 700) & (df['avr_trans_time'] <= 1200), 'time_cat'] = 'morning'
+    df.loc[(df['avr_trans_time'] > 1200) & (df['avr_trans_time'] <= 1700), 'time_cat'] = 'day'
+    df.loc[(df['avr_trans_time'] > 1700) & (df['avr_trans_time'] <= 2100), 'time_cat'] = 'evening'
+    df.loc[(df['avr_trans_time'] < 700) | (df['avr_trans_time'] > 2100), 'time_cat'] = 'night'
+
+    return df
+
+
 def postfilter_items(user_id, recommednations):
     pass
